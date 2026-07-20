@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flight Turbulence Map</title>
+  <meta name="description" content="Select departure and arrival airports and a flight altitude to see an estimated turbulence profile and map, computed live from NOAA GFS data via Open-Meteo." />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>✈️ Flight Turbulence Map</h1>
+    <p class="subtitle">Estimated turbulence along your route — powered by NOAA GFS via Open-Meteo</p>
+  </header>
+
+  <main>
+    <section class="controls">
+      <div class="field">
+        <label for="dep">Departure</label>
+        <input id="dep" list="airport-list" placeholder="e.g. JFK — New York" autocomplete="off" />
+      </div>
+      <div class="field">
+        <label for="arr">Arrival</label>
+        <input id="arr" list="airport-list" placeholder="e.g. LHR — London" autocomplete="off" />
+      </div>
+      <datalist id="airport-list"></datalist>
+
+      <div class="field">
+        <label for="alt">Cruise altitude: <span id="altValue">35,000 ft</span> (<span id="flValue">FL350</span>)</label>
+        <input id="alt" type="range" min="10000" max="45000" step="1000" value="35000" />
+      </div>
+
+      <div class="field">
+        <label for="dt">Departure time (UTC)</label>
+        <input id="dt" type="datetime-local" />
+      </div>
+
+      <button id="go">Get turbulence</button>
+      <p id="status" class="status"></p>
+    </section>
+
+    <section class="results">
+      <div id="map"></div>
+      <div class="chart-wrap">
+        <canvas id="chart"></canvas>
+        <div id="summary" class="summary"></div>
+      </div>
+    </section>
+
+    <section class="legend">
+      <strong>Turbulence:</strong>
+      <span class="pill" style="--c:#2ecc71">Calm</span>
+      <span class="pill" style="--c:#c6e34d">Light</span>
+      <span class="pill" style="--c:#f4b731">Moderate</span>
+      <span class="pill" style="--c:#e8663b">Strong</span>
+      <span class="pill" style="--c:#b5179e">Severe</span>
+    </section>
+
+    <p class="disclaimer">
+      ⚠️ <strong>Estimate only — not for operational flight planning.</strong>
+      This is a clear-air-turbulence proxy from vertical wind shear in NOAA's GFS model
+      (via <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a>),
+      not NOAA's official GTG/EDR product used by
+      <a href="https://turbli.com" target="_blank" rel="noopener">turbli.com</a>.
+      See the <a href="https://github.com/" target="_blank" rel="noopener">README</a> for how to plug in real GTG data.
+    </p>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="js/airports.js"></script>
+  <script src="js/turbulence.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

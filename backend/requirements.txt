@@ -1,0 +1,6 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+# For real GTG GRIB decoding, add:
+# cfgrib>=0.9
+# xarray>=2024.1
+# requests>=2.31
