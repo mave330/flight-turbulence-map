@@ -1,0 +1,15 @@
+Replace the Leaflet/style section in <head> with exactly this order:
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="./css/style.css">
+<link rel="stylesheet" href="./css/leaflet-critical.css?v=2">
+
+<script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script type="module" src="./js/app.js"></script>
+
+Important:
+- Remove integrity= and crossorigin= from the Leaflet CSS and JS links for this test.
+- Delete the old css/leaflet-fix.css link.
+- Keep leaflet-critical.css AFTER style.css.
+- Commit, let Pages deploy, then hard refresh with Ctrl+F5.
