@@ -1,93 +1,23 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Experimental CAT proxy along a flight route using public GFS forecast data.">
-  <title>Flight Turbulence Map</title>
-  <link rel="preconnect" href="https://unpkg.com">
-  <link rel="preconnect" href="https://cdn.jsdelivr.net">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIINfQ3aZ8f7JtS92U1bB84pJfMZQ7eL4w=" crossorigin="">
-  <link rel="stylesheet" href="./css/style.css">
-  <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-  <script type="module" src="./js/app.js"></script>
-</head>
-<body>
-  <header class="hero">
-    <div>
-      <p class="eyebrow">GFS • Open-Meteo • experimental</p>
-      <h1>Flight turbulence map</h1>
-      <p class="subtitle">Explore a clear-air-turbulence proxy along a great-circle route.</p>
-    </div>
-    <span class="badge">Not for operational use</span>
-  </header>
-
-  <main>
-    <section class="panel controls" aria-labelledby="route-title">
-      <div class="section-heading">
-        <div><p class="step">01</p><h2 id="route-title">Route and forecast</h2></div>
-        <button id="swapButton" class="secondary" type="button" title="Swap airports">⇄ Swap</button>
-      </div>
-      <div class="form-grid">
-        <div class="airport-picker">
-          <label for="departureInput">Departure</label>
-          <input id="departureInput" type="search" spellcheck="false" autocomplete="off" placeholder="CDG, LFPG, Paris…" aria-autocomplete="list" aria-controls="departureResults">
-          <div id="departureResults" class="airport-results" role="listbox" hidden></div>
-          <p id="departureChoice" class="selection">No airport selected</p>
-        </div>
-        <div class="airport-picker">
-          <label for="arrivalInput">Arrival</label>
-          <input id="arrivalInput" type="search" spellcheck="false" autocomplete="off" placeholder="JFK, KJFK, New York…" aria-autocomplete="list" aria-controls="arrivalResults">
-          <div id="arrivalResults" class="airport-results" role="listbox" hidden></div>
-          <p id="arrivalChoice" class="selection">No airport selected</p>
-        </div>
-        <div>
-          <label for="flightLevel">Cruise level</label>
-          <select id="flightLevel">
-            <option value="200">FL200</option><option value="240">FL240</option><option value="280">FL280</option>
-            <option value="300">FL300</option><option value="320">FL320</option><option value="340">FL340</option>
-            <option value="350" selected>FL350</option><option value="360">FL360</option><option value="380">FL380</option>
-            <option value="400">FL400</option><option value="420">FL420</option>
-          </select>
-        </div>
-        <div>
-          <label for="forecastTime">Forecast time (UTC)</label>
-          <select id="forecastTime"></select>
-        </div>
-      </div>
-      <div class="actions">
-        <button id="analyseButton" class="primary" type="button" disabled>Analyse route</button>
-        <span id="airportStatus" class="muted">Loading airport database…</span>
-      </div>
-      <div id="status" class="status" role="status" aria-live="polite">Select two airports to begin.</div>
-    </section>
-
-    <section class="stats" aria-label="Route summary">
-      <article><span>Distance</span><strong id="distanceStat">—</strong></article>
-      <article><span>Mean index</span><strong id="meanStat">—</strong></article>
-      <article><span>Maximum</span><strong id="maxStat">—</strong></article>
-      <article><span>Valid samples</span><strong id="samplesStat">—</strong></article>
-    </section>
-
-    <section class="visual-grid">
-      <article class="panel visual-panel">
-        <div class="section-heading"><div><p class="step">02</p><h2>Route map</h2></div></div>
-        <div id="map" aria-label="Route turbulence map"></div>
-        <div class="legend"><span><i class="calm"></i>Calm</span><span><i class="light"></i>Light</span><span><i class="moderate"></i>Moderate</span><span><i class="severe"></i>Severe</span></div>
-      </article>
-      <article class="panel visual-panel">
-        <div class="section-heading"><div><p class="step">03</p><h2>CAT proxy profile</h2></div></div>
-        <div class="chart-wrap"><canvas id="turbulenceChart"></canvas></div>
-      </article>
-    </section>
-
-    <section class="panel methodology">
-      <h2>Important limitation</h2>
-      <p>This is an experimental clear-air-turbulence proxy based on vertical wind shear between adjacent GFS pressure levels. It is neither official GTG/EDR guidance nor a flight-planning product. It does not model convective, mountain-wave, wake or low-level turbulence.</p>
-    </section>
-  </main>
-  <footer>Public data: Open-Meteo / NOAA GFS and OurAirports • Basemap © OpenStreetMap contributors</footer>
-  <noscript>This application requires JavaScript.</noscript>
-</body>
-</html>
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flight Turbulence Map</title>
+<!-- IMPORTANT: no integrity attribute. The previous bad SRI blocked Leaflet CSS. -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="./css/style.css?v=clean-1">
+<script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script type="module" src="./js/app.js?v=clean-1"></script>
+</head><body>
+<header class="hero"><div><p class="eyebrow">GFS • OPEN-METEO • EXPERIMENTAL</p><h1>Flight turbulence map</h1><p>Explore a clear-air-turbulence proxy along a great-circle route.</p></div><b class="warning">Not for operational use</b></header>
+<main>
+<section class="panel controls"><div class="heading"><div><span>01</span><h2>Route and forecast</h2></div><button id="swap" class="secondary">⇄ Swap</button></div>
+<div class="formgrid">
+<div class="picker"><label>Departure</label><input id="depInput" placeholder="CDG, LFPG, Paris…" autocomplete="off"><div id="depResults" class="results" hidden></div><small id="depSelected">No airport selected</small></div>
+<div class="picker"><label>Arrival</label><input id="arrInput" placeholder="JFK, KJFK, New York…" autocomplete="off"><div id="arrResults" class="results" hidden></div><small id="arrSelected">No airport selected</small></div>
+<div><label>Cruise level</label><select id="fl"><option>FL200</option><option>FL240</option><option>FL280</option><option>FL300</option><option>FL320</option><option>FL340</option><option selected>FL350</option><option>FL360</option><option>FL380</option><option>FL400</option><option>FL420</option></select></div>
+<div><label>Forecast time (UTC)</label><select id="time"></select></div></div>
+<div class="actions"><button id="analyse" class="primary" disabled>Analyse route</button><small id="airportStatus">Loading airports…</small></div><div id="status" class="status">Select two airports.</div></section>
+<section class="stats"><article><small>DISTANCE</small><strong id="distance">—</strong></article><article><small>MEAN INDEX</small><strong id="mean">—</strong></article><article><small>MAXIMUM</small><strong id="maximum">—</strong></article><article><small>VALID SAMPLES</small><strong id="valid">—</strong></article></section>
+<section class="visuals"><article class="panel visual"><span>02</span><h2>Route map</h2><div id="map"></div><div class="legend"><i class="c"></i>Calm <i class="l"></i>Light <i class="m"></i>Moderate <i class="s"></i>Severe</div></article><article class="panel visual"><span>03</span><h2>CAT proxy profile</h2><div class="chart"><canvas id="chart"></canvas></div></article></section>
+<section class="panel note"><h2>Important limitation</h2><p>Experimental vertical-wind-shear proxy only. Not GTG/EDR and not for operational flight planning. Convective, mountain-wave, wake and low-level turbulence are not represented.</p></section>
+</main><footer>Open-Meteo / NOAA GFS • OurAirports • OpenStreetMap • Leaflet • Chart.js</footer></body></html>

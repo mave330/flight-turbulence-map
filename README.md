@@ -1,37 +1,12 @@
-# Definitive map display repair
+# Flight Turbulence Map — clean build
 
-This patch does not rely on the external Leaflet stylesheet. It fixes the map twice:
+Clean static build for GitHub Pages. The Leaflet CSS and JS links intentionally have **no `integrity` attribute**, because the previous invalid SRI value caused the browser to block `leaflet.css`.
 
-1. Critical Leaflet layout rules are embedded directly inside `index.html`.
-2. `js/leaflet-repair.js` applies the required positioning as inline `!important` styles and watches newly created tiles with a `MutationObserver`.
+## Upload
+Delete the old repository contents, then upload the contents of this folder so `index.html` is at repository root. Set GitHub Pages source to **GitHub Actions**.
 
-## Apply exactly
+## Validation
+In DevTools Network, `leaflet.css` must return HTTP 200 and must not show `blocked: integrity`. In Console:
+`getComputedStyle(document.querySelector('.leaflet-tile')).position` must return `absolute`.
 
-1. Upload `js/leaflet-repair.js` to your repository's existing `js` folder.
-2. Open `index.html`.
-3. Delete all existing Leaflet CSS links, old `leaflet-fix.css` / `leaflet-critical.css` links, and the existing Leaflet/Chart/app script tags.
-4. Paste the complete content of `HEAD_REPLACEMENT.html` in their place, still inside `<head>`.
-5. Commit to `main` and ensure GitHub Pages deploys that commit.
-6. Open the deployed page with `?build=20260721-3` appended once to bypass HTML cache.
-
-## Verification in browser console
-
-Run:
-
-```js
-getComputedStyle(document.querySelector('.leaflet-tile')).position
-```
-
-Expected result:
-
-```text
-absolute
-```
-
-Also run:
-
-```js
-window.__repairLeafletMap()
-```
-
-The function should exist and return without an error. If it is undefined, the newly uploaded JavaScript is not the version served by GitHub Pages.
+Experimental only; not for operational flight planning.
