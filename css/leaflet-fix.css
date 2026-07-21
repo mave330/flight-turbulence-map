@@ -1,0 +1,31 @@
+/* Load the complete Leaflet stylesheet independently of a stale/bad SRI hash. */
+@import url("https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css");
+
+/* Hard containment: tiles and panes must never escape into the chart card. */
+#map,
+#map.leaflet-container {
+  position: relative;
+  z-index: 0;
+  isolation: isolate;
+  contain: layout paint;
+  overflow: hidden !important;
+  width: 100%;
+}
+
+.visual-panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.chart-wrap {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+#map .leaflet-pane,
+#map .leaflet-control {
+  position: absolute;
+}
