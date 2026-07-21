@@ -1,0 +1,20 @@
+<!-- Replace the existing Leaflet/style/script block in <head> with this exact block. -->
+<link rel="stylesheet" href="./css/style.css?v=20260721-3">
+<style id="leaflet-critical-inline">
+  /* Local critical Leaflet geometry: cannot fail because it is inline. */
+  .leaflet-pane,.leaflet-tile,.leaflet-marker-icon,.leaflet-marker-shadow,
+  .leaflet-tile-container,.leaflet-pane>svg,.leaflet-pane>canvas,
+  .leaflet-image-layer,.leaflet-layer{position:absolute!important;left:0!important;top:0!important}
+  .leaflet-container{position:relative!important;overflow:hidden!important;isolation:isolate!important;background:#081522}
+  .leaflet-container img.leaflet-tile{width:256px!important;height:256px!important;max-width:none!important;max-height:none!important;margin:0!important;padding:0!important;display:block!important}
+  .leaflet-pane{z-index:400}.leaflet-tile-pane{z-index:200}.leaflet-overlay-pane{z-index:400}
+  .leaflet-shadow-pane{z-index:500}.leaflet-marker-pane{z-index:600}.leaflet-tooltip-pane{z-index:650}.leaflet-popup-pane{z-index:700}
+  .leaflet-control{position:relative;z-index:800;pointer-events:auto}.leaflet-top,.leaflet-bottom{position:absolute;z-index:1000;pointer-events:none}
+  .leaflet-top{top:0}.leaflet-right{right:0}.leaflet-bottom{bottom:0}.leaflet-left{left:0}
+  #map{position:relative!important;overflow:hidden!important;isolation:isolate!important;contain:layout paint!important;width:100%!important;z-index:0!important}
+  .visual-panel,.chart-wrap{position:relative;overflow:hidden;isolation:isolate}.chart-wrap{z-index:2}
+</style>
+<script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script defer src="./js/leaflet-repair.js?v=20260721-3"></script>
+<script type="module" src="./js/app.js?v=20260721-3"></script>
