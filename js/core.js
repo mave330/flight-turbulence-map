@@ -1,0 +1,8 @@
+(function(root){'use strict';
+const norm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
+function search(list,q,limit=30){q=norm(q);if(!q)return list.slice(0,limit);const t=q.split(' ');return list.filter(a=>t.every(x=>a._s.includes(x))).map(a=>({a,s:(a.iata.toLowerCase()===q?-100:0)+(a.icao.toLowerCase()===q?-90:0)+(a.iata.toLowerCase().startsWith(q)?-20:0)})).sort((x,y)=>x.s-y.s||x.a.name.localeCompare(y.a.name)).slice(0,limit).map(x=>x.a)}
+function prepare(list){return list.map((a,i)=>Object.assign({_id:i,_s:norm(`${a.iata} ${a.icao} ${a.name} ${a.city} ${a.country}`)},a))}
+function distance(a,b){const R=3440.065,r=x=>x*Math.PI/180,dl=r(b.lat-a.lat),dn=r(b.lon-a.lon),h=Math.sin(dl/2)**2+Math.cos(r(a.lat))*Math.cos(r(b.lat))*Math.sin(dn/2)**2;return 2*R*Math.asin(Math.sqrt(h))}
+function route(a,b,n){const r=x=>x*Math.PI/180,d=x=>x*180/Math.PI,p=[r(a.lat),r(a.lon)],q=[r(b.lat),r(b.lon)],ang=2*Math.asin(Math.sqrt(Math.sin((q[0]-p[0])/2)**2+Math.cos(p[0])*Math.cos(q[0])*Math.sin((q[1]-p[1])/2)**2)),total=distance(a,b);return Array.from({length:n},(_,i)=>{const f=i/(n-1),A=Math.sin((1-f)*ang)/Math.sin(ang),B=Math.sin(f*ang)/Math.sin(ang),x=A*Math.cos(p[0])*Math.cos(p[1])+B*Math.cos(q[0])*Math.cos(q[1]),y=A*Math.cos(p[0])*Math.sin(p[1])+B*Math.cos(q[0])*Math.sin(q[1]),z=A*Math.sin(p[0])+B*Math.sin(q[0]);return{lat:d(Math.atan2(z,Math.hypot(x,y))),lon:d(Math.atan2(y,x)),distanceNm:total*f}})}
+function severity(i){return i<20?['Calm','#39da7d']:i<45?['Light','#f4d35e']:i<70?['Moderate','#ff9f43']:['Severe','#ff4d68']}
+root.FTM={norm,search,prepare,distance,route,severity};if(typeof module!=='undefined')module.exports=root.FTM;})(typeof window!=='undefined'?window:globalThis);

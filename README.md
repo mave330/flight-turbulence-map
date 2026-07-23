@@ -1,12 +1,14 @@
-# Flight Turbulence Map — clean build
+# Flight Turbulence Map v2.0.0
 
-Clean static build for GitHub Pages. The Leaflet CSS and JS links intentionally have **no `integrity` attribute**, because the previous invalid SRI value caused the browser to block `leaflet.css`.
+Major clean rebuild. Airport search is now based on a bundled local dataset and never waits for a remote 12+ MB CSV. No ES modules are used, eliminating stale dependency-module failures. Leaflet is loaded without SRI. A deployment workflow runs syntax, core logic, asset, HTML-ID and dataset tests before publishing.
 
-## Upload
-Delete the old repository contents, then upload the contents of this folder so `index.html` is at repository root. Set GitHub Pages source to **GitHub Actions**.
+## Deploy
+Delete the old repository contents, upload all contents of this folder to repository root, commit to `main`, and select GitHub Actions under Settings → Pages.
 
-## Validation
-In DevTools Network, `leaflet.css` must return HTTP 200 and must not show `blocked: integrity`. In Console:
-`getComputedStyle(document.querySelector('.leaflet-tile')).position` must return `absolute`.
+## Test locally
+`npm test`
 
-Experimental only; not for operational flight planning.
+Serve with `python3 -m http.server 8000` and open the local page.
+
+## Limitations
+Experimental vertical-wind-shear proxy, not GTG/EDR and not for operational use.

@@ -1,0 +1,1 @@
+{"name":"flight-turbulence-map","version":"2.0.0","private":true,"scripts":{"test":"node --check js/core.js && node --check js/app.js && node tests/test.js && python3 tests/validate.py"}}
